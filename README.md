@@ -1,16 +1,20 @@
 # habit_tracker
 
-A new Capstone Futtter project.
+As a productivity-focused user,
+I want to track and monitor my daily habits,
+So that I can build consistent routines and achieve personal goals.
 
-## Getting Started
+As a visually-oriented user,
+I want to see my habit progress in a clear and engaging interface,
+So that I stay motivated and committed over time.
 
-This project is a starting point for a Flutter application.
+As a busy individual,
+I want to receive daily reminders and quick input options,
+So that I can easily log habits without interrupting my schedule.
 
-A few resources to get you started if this is your first Flutter project:
+As a data-driven user,
+I want to view historical performance and trends,
+So that I can identify patterns and make improvements.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## User Stories
+Detailed user stories are available in the [USER_STORIES.md](USER_STORIES.md) file.
