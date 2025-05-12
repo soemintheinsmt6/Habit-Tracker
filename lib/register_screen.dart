@@ -1,10 +1,8 @@
 import 'dart:convert';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'country_list.dart';
 import 'habit_tracker_screen.dart';
 import 'login_screen.dart';
@@ -19,6 +17,8 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final _nameController = TextEditingController();
   final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+
   double _age = 25; // Default age set to 25
   String _country = 'United States';
   List<String> _countries = [];
@@ -78,8 +78,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void _register() async {
     final name = _nameController.text;
     final username = _usernameController.text;
+    final password = _passwordController.text;
 
-    if (username.isEmpty || name.isEmpty) {
+    if (username.isEmpty || name.isEmpty || password.isEmpty) {
       _showToast('Please fill in all fields');
       return;
     }
@@ -99,6 +100,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     // Save user information and habits to shared preferences.
     await prefs.setString('name', name);
     await prefs.setString('username', username);
+    await prefs.setString('password', password);
     await prefs.setDouble('age', _age);
     await prefs.setString('country', _country);
     await prefs.setString('selectedHabitsMap', jsonEncode(selectedHabitsMap));
@@ -162,11 +164,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildInputField(_nameController, 'Name', Icons.person),
-                const SizedBox(height: 10),
                 _buildInputField(
-                    _usernameController, 'Username', Icons.alternate_email),
-                const SizedBox(height: 10),
+                  controller: _nameController,
+                  hint: 'Name',
+                  icon: Icons.person,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: _buildInputField(
+                      controller: _usernameController,
+                      hint: 'Username',
+                      icon: Icons.alternate_email),
+                ),
+                _buildInputField(
+                    controller: _passwordController,
+                    hint: 'Password',
+                    icon: Icons.lock,
+                    obscureText: true),
+                const SizedBox(height: 20),
                 Text('Age: ${_age.round()}',
                     style: const TextStyle(color: Colors.white, fontSize: 18)),
                 Slider(
@@ -182,11 +197,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     });
                   },
                 ),
-                const SizedBox(height: 10),
                 _buildCountryDropdown(),
-                const SizedBox(height: 10),
                 const Text('Select Your Habits',
                     style: TextStyle(color: Colors.white, fontSize: 18)),
+                const SizedBox(height: 8),
                 Wrap(
                   spacing: 10,
                   runSpacing: 10,
@@ -246,7 +260,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Widget _buildInputField(
-      TextEditingController controller, String hint, IconData icon) {
+      {required TextEditingController controller,
+      required String hint,
+      required IconData icon,
+      bool obscureText = false}) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -254,6 +271,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
       child: TextField(
         controller: controller,
+        obscureText: obscureText,
         decoration: InputDecoration(
           prefixIcon: Icon(icon, color: Colors.blue.shade700),
           hintText: hint,
@@ -267,6 +285,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Widget _buildCountryDropdown() {
     return Container(
+      margin: const EdgeInsets.symmetric(vertical: 20),
       padding: const EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
         color: Colors.white,
