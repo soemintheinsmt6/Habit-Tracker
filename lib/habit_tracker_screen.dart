@@ -9,9 +9,7 @@ import 'personal_info_screen.dart';
 import 'reports_screen.dart';
 
 class HabitTrackerScreen extends StatefulWidget {
-  final String username;
-
-  const HabitTrackerScreen({super.key, required this.username});
+  const HabitTrackerScreen({super.key});
 
   @override
   State<HabitTrackerScreen> createState() => _HabitTrackerScreenState();
@@ -31,7 +29,7 @@ class _HabitTrackerScreenState extends State<HabitTrackerScreen> {
   Future<void> _loadUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      name = prefs.getString('name') ?? widget.username;
+      name = prefs.getString('name') ?? 'Unknown';
       selectedHabitsMap = Map<String, String>.from(
           jsonDecode(prefs.getString('selectedHabitsMap') ?? '{}'));
       completedHabitsMap = Map<String, String>.from(

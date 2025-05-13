@@ -104,13 +104,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
     await prefs.setDouble('age', _age);
     await prefs.setString('country', _country);
     await prefs.setString('selectedHabitsMap', jsonEncode(selectedHabitsMap));
-    // await prefs.setStringList('selectedHabits', selectedHabits);
+    await prefs.setBool('isLoggedIn', true);
 
     if (mounted) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => HabitTrackerScreen(username: username),
+          builder: (context) => const HabitTrackerScreen(),
         ),
       );
     }

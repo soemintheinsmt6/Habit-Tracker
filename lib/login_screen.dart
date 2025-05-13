@@ -31,12 +31,13 @@ class _LoginScreenState extends State<LoginScreen> {
       await prefs.setString('username', 'testuser');
       await prefs.setDouble('age', 25);
       await prefs.setString('country', 'United States');
+      await prefs.setBool('isLoggedIn', true);
 
       if (mounted) {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => HabitTrackerScreen(username: username),
+            builder: (context) => const HabitTrackerScreen(),
           ),
         );
       }
